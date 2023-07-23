@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Service\ProductComment;
+
+use App\Service\BaseService;
+use App\Repositories\ProductComment\ProductCommentRepositoryInterface;
+
+class ProductCommentService extends BaseService implements ProductCommentRepositoryInterface{
+    public $repository;
+
+    public function __construct(ProductCommentRepositoryInterface $ProductCommentRepository)
+    {
+        $this->repository = $ProductCommentRepository;
+    }
+}
