@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Service\Product\ProductServiceInterface;
 use App\Http\Controllers\Front\ShopController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,9 @@ Route::prefix('shop')->group(function(){
     Route::post('shop', [ShopController::class,'index']);
     Route::get('', [ShopController::class, 'index']);
     Route::get('category/{categoryName}',[ShopController::class,'category']);
+});
+
+Route::prefix('cart')->group(function () {
+    Route::get('add/{id}', [CartController::class, 'add']);
+    Route::get('/', [CartController::class, 'index']);
 });

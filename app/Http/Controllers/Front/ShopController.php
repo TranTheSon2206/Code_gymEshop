@@ -25,10 +25,13 @@ class ShopController extends Controller
     }
 
     public function show($id){
+        $categories = $this->productCategoryService->all();
+        $brands = $this->brandService->all();
+
         $product = $this->productService->find($id);
         $relatedProducts = $this->productService->getRelatedProducts($product);
 
-        return view('front.shop.show', compact('product','relatedProducts'));
+        return view('front.shop.show', compact('product','relatedProducts','categories', 'brands'));
     }
 
     // public function postComment(Request $request){
