@@ -4,7 +4,7 @@ namespace App\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use App\Service\Product\ProductServiceInterface;
-use Gloudemans\Shoppingcart\Facades\Cart; 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -16,25 +16,8 @@ class CartController extends Controller
         $this->productService = $productService;
     }
 
-    public function add($id) {
-        $product = $this->productService->find($id);
-
-        Cart::add([
-            'id' => $product->id,
-            'name' => $product->name,
-            'qty' => 1,
-            'price' => $product->discount ?? $product->price,
-            'weight' => $product->weight ?? 0,
-            'options' => [
-                'images'=>$product->productImages,
-            ],
-        ]);
-        
-
-        return back();
-    }
-
-    public function index() {
+    public function index()
+    {
         $carts = Cart::content();
         $total = Cart::total();
         $subtotal = Cart::subtotal();
@@ -42,4 +25,40 @@ class CartController extends Controller
         return view('front.shop.cart', compact('carts', 'total', 'subtotal'));
     }
 
+    public function add(Request $request)
+    {
+        if ($request->ajax()) {
+            $product = $this->productService->find($request->productId);
+
+            $response['cart'] = Cart::add([
+                'id' => $product->id,
+                'name' => $product->name,
+                'qty' => 1,
+                'price' => $product->discount ?? $product->price,
+                'weight' => $product->weight ?? 0,
+                'options' => [
+                    'images' => $product->productImages,
+                ],
+            ]);
+
+            $response['count'] = Cart::count();
+            $response['total'] = Cart::total();
+
+            return $response;
+        }
+
+        return back();
+    }
+
+    public function delete(Request $request){
+        if($request->ajax()){
+            $response['cart'] = Cart::remove($request->rowId);
+            
+            $response['count'] = Cart::count();
+            $response['total'] = Cart::total();
+            $response['subtotal'] = Cart::subtotal();
+
+            return $response;
+        }
+    }
 }
