@@ -120,7 +120,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
-                                                        <i onclick="window.location='./cart/delete/{{ $cart ->rowId }}'" class="ti-close"></i>
+                                                        <i onclick="removeCart('{{$cart->rowId}}')" class="ti-close"></i>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -183,7 +183,7 @@
                             <ul class="dropdown">
                                 <li><a href="blog-details.html">Blog's Details</a></li>
                                 <li><a href="./cart">Shopping Cart</a></li>
-                                <li><a href="check-out.html">Checkout</a></li>
+                                <li><a href="./checkout">Checkout</a></li>
                                 <li><a href="faq.html">Faq</a></li>
                                 <li><a href="register.html">Register</a></li>
                                 <li><a href="login.html">Login</a></li>

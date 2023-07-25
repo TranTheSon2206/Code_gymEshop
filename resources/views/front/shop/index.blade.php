@@ -1,8 +1,8 @@
 @extends('front.layout.master')
 
 @section('title', 'Shop')
-@section('body')
 
+@section('body')
 
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">

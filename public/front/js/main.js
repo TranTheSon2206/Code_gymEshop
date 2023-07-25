@@ -248,6 +248,10 @@
 			}
 		}
 		$button.parent().find('input').val(newVal);
+
+        //Update cart:
+        var rowId = $button.parent().find('input').data('rowid');
+        updateCart(rowId, newVal);
 	});
 
 
@@ -304,7 +308,7 @@ function addCart(productId){
                     '</div>' +
                     '</td>' +
                     '<td class="si-close">' +
-                    '<i onclick="window.location=\'./cart/delete/{{ $cart->rowId }}\'" class="ti-close"></i>' +
+                    '<i onclick="removeCart(\''+response['cart'].rowId+'\')" class="ti-close"></i>' +
                     '</td>' +
                     '</tr>';
             
@@ -316,6 +320,109 @@ function addCart(productId){
         },
         error: function (response){
             alert("Add failed!");
+            console.log(response);
+        },
+    });
+}
+
+function removeCart(rowId){
+    $.ajax({
+        type: "GET",
+        url: "cart/delete",
+        data: {rowId: rowId},
+        success: function (response){
+            //Xu ly cart_hover trang master-page
+            $('.cart-count').text(response['count']);
+            $('.cart-price').text('$' + response['total']);
+            $('.select-total h5').text('$' + response['total']);
+
+            var cartHover_tbody = $('.select-items tbody');
+            var cartHover_existItem = cartHover_tbody.find("tr[data-rowId='" + rowId + "']");
+
+            cartHover_existItem.remove();
+
+            //Xu ly trong trang "Shop/cart"
+            var cart_tbody = $('.cart-table tbody');
+            var cart_existItem = cart_tbody.find("tr[data-rowId='" + rowId + "']");
+            cart_existItem.remove();
+            
+            alert('Delete successful!\nProduct: '+ response['cart'].name)
+            console.log(response);
+        },
+        error: function (response){
+            alert("Delete failed!");
+            console.log(response);
+        },
+    });
+}
+
+function destroyCart(){
+    $.ajax({
+        type: "GET",
+        url: "cart/destroy",
+        data: {},
+        success: function (response){
+            //Xu ly cart_hover trang master-page
+            $('.cart-count').text('0');
+            $('.cart-price').text('0');
+            $('.select-total h5').text('0');
+
+            var cartHover_tbody = $('.select-items tbody');
+            cartHover_tbody.children().remove();
+
+            //Xu ly trong trang "Shop/cart"
+            var cart_tbody = $('.cart-table tbody');
+            cart_tbody.children().remove();
+
+            $('.subtotal span').text('0')
+            $('.cart-total span').text('0')
+            
+            alert('Delete successful!\nProduct: '+ response['cart'].name)
+            console.log(response);
+        },
+        error: function (response){
+            alert("Delete failed!");
+            console.log(response);
+        },
+    });
+}
+
+function updateCart(rowId, qty){
+    $.ajax({
+        type: "GET",
+        url: "cart/update",
+        data: {rowId: rowId, qty: qty},
+        success: function (response){
+            //Xu ly cart_hover trang master-page
+            $('.cart-count').text(response['count']);
+            $('.cart-price').text('$'+response['total']);
+            $('.select-total h5').text('$'+response['total']);
+
+            var cartHover_tbody = $('.select-items tbody');
+            var cartHover_existItem = cartHover_tbody.find("tr[data-rowId='" + rowId + "']");
+            if(qty===0){
+                cartHover_existItem.remove();
+            } else{
+                cartHover_existItem.find('.product-selected p').text('$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty);
+            }
+
+            //Xu ly trong trang "Shop/cart"
+            var cart_tbody = $('.cart-table tbody');
+            var cart_existItem = cart_tbody.find("tr[data-rowId='" + rowId + "']");
+            if(qty===0){
+                cart_existItem.remove();
+            } else{
+                cart_existItem.find('.total-price').text('$' + (response['cart'].price * response['cart'].qty).toFixed(2));
+            }
+
+            $('.subtotal span').text('$'+response['subtotal']);
+            $('.cart-total span').text('$'+response['total']);
+            
+            alert('Update successful!\nProduct: '+ response['cart'].name)
+            console.log(response);
+        },
+        error: function (response){
+            alert("Update failed!");
             console.log(response);
         },
     });

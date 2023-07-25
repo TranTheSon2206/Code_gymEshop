@@ -7,6 +7,7 @@ use App\Service\Product\ProductServiceInterface;
 use App\Http\Controllers\Front\ShopController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckOutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,15 +38,21 @@ Route::get('/', [HomeController::class, 'index']);
 // Route::get('shop/product/{id}', [ShopController::class,'show']);
 
 Route::prefix('shop')->group(function(){
+    Route::get('/', [ShopController::class, 'index']);
     Route::get('/product/{id}', [ShopController::class,'show']);
     Route::post('/product/{id}', [ShopController::class,'postComment']);
     Route::post('shop', [ShopController::class,'index']);
-    Route::get('', [ShopController::class, 'index']);
     Route::get('category/{categoryName}',[ShopController::class,'category']);
 });
 
-Route::prefix('cart')->group(function () {
-    Route::get('add', [CartController::class, 'add']);
+Route::prefix('cart')->group(function(){
     Route::get('/', [CartController::class, 'index']);
+    Route::get('add', [CartController::class, 'add']);
     Route::get('delete', [CartController::class, 'delete']);
+    Route::get('destroy', [CartController::class, 'destroy']);
+    Route::get('update', [CartController::class, 'update']);
+});
+
+Route::prefix('checkout')->group(function(){
+    Route::get('', [CheckOutController::class,'index']);
 });
