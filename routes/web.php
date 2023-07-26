@@ -22,21 +22,6 @@ use App\Http\Controllers\Front\CheckOutController;
 
 Route::get('/', [HomeController::class, 'index']);
 
-
-// Route::get('/', function (\App\Repositories\Product\ProductRepositoryInterface $productRepository) {
-//     return view('front.index');
-//     return User::all();
-//     return $productRepository->all();
-// });
-
-// Route::get('/', function (ProductServiceInterface $productService) {
-//     return view('front.index');
-//     return User::all();
-//     return $productService->find(2);
-// });
-
-// Route::get('shop/product/{id}', [ShopController::class,'show']);
-
 Route::prefix('shop')->group(function(){
     Route::get('/', [ShopController::class, 'index']);
     Route::get('/product/{id}', [ShopController::class,'show']);
@@ -55,4 +40,5 @@ Route::prefix('cart')->group(function(){
 
 Route::prefix('checkout')->group(function(){
     Route::get('', [CheckOutController::class,'index']);
+    Route::post('/', [CheckOutController::class,'addOrder']);
 });
