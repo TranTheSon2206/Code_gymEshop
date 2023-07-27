@@ -54,3 +54,8 @@ Route::prefix('account')->group(function(){
         Route::get('{id}', [AccountController::class, 'myOrderShow']);
     });
 });
+
+Route::get('contact',function(){return view('front.contact');});
+Route::get('blog',function(){return view('front.blog');});
+Route::get('faq',function(){return view('front.faq');});
+Route::get('blog-details',function(){return view('front.blog-details');});

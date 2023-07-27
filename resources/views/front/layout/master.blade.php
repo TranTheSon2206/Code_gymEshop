@@ -188,15 +188,15 @@
                                 <li><a href="">Kid's</a></li>
                             </ul>
                         </li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li class="{{(request()->segment(1) == 'blog') ? 'active' : ''}}"><a href="./blog">Blog</a></li>
+                        <li class="{{(request()->segment(1) == 'contact') ? 'active' : ''}}"><a href="./contact">Contact</a></li>
                         <li><a href="">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="./account/my-order">My Order</a></li>
-                                <li><a href="blog-details.html">Blog's Details</a></li>
+                                <li><a href="./blog-details">Blog's Details</a></li>
                                 <li><a href="./cart">Shopping Cart</a></li>
                                 <li><a href="./checkout">Checkout</a></li>
-                                <li><a href="faq.html">Faq</a></li>
+                                <li><a href="./faq">Faq</a></li>
                                 <li><a href="./account/register">Register</a></li>
                                 <li><a href="./account/login">Login</a></li>
                             </ul>
