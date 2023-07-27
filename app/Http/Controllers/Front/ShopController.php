@@ -7,18 +7,20 @@ use App\Service\Brand\BrandServiceInterface;
 use App\Service\Product\ProductServiceInterface;
 use App\Service\ProductCategory\ProductCategoryServiceInterface;
 use App\Service\ProductComment\ProductCommentServiceInterface;
+use App\Service\ProductComment\ProductCommentService;
+
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
     private $productService;
-    // private $productCommentService;
+    private $productCommentService;
     private $productCategoryService;
     private $brandService;
 
-    public function __construct(ProductServiceInterface $productService /*,ProductCommentServiceInterface $productCommentService*/, ProductCategoryServiceInterface $productCategoryService, BrandServiceInterface $brandService){
+    public function __construct(ProductServiceInterface $productService ,ProductCommentServiceInterface $productCommentService, ProductCategoryServiceInterface $productCategoryService, BrandServiceInterface $brandService){
         $this->productService = $productService;
-        // $this->productCommentService = $productCommentService;
+        $this->productCommentService = $productCommentService;
         $this->productCategoryService = $productCategoryService;
         $this->brandService = $brandService;
 
@@ -34,11 +36,11 @@ class ShopController extends Controller
         return view('front.shop.show', compact('product','relatedProducts','categories', 'brands'));
     }
 
-    // public function postComment(Request $request){
-    //     $this->productCommentService->create($request->all());
+    public function postComment(Request $request){
+        $this->productCommentService->create($request->all());
 
-    //     return redirect()->back();
-    // }
+        return redirect()->back();
+    }
 
     public function index(Request $request){
         $categories = $this->productCategoryService->all();

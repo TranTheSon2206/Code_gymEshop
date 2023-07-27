@@ -4346,3 +4346,14 @@ ol {
 .rate > label:hover ~ input:checked ~ label {
     color: #c59b08;
 }
+
+
+/*Login Password*/
+
+.field-icon {
+	float: right;
+	margin-left: -25px;
+	margin-top: -25px;
+	position: relative;
+	z-index: 2;
+  }

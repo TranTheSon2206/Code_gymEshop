@@ -77,7 +77,7 @@
                                 <div class="pro-qty">
                                     <input type="text" value="1">
                                 </div>
-                                <a href="#" class="primary-btn">Add To Cart</a>
+                                <a href="javascript:addCart({{$product->id}})" class="primary-btn">Add To Cart</a>
                             </div>
                             <ul class="pd-tags">
                                 <li><span>CATEGORIES</span>: {{$product->productCategory->name}}</li>

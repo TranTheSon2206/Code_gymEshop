@@ -1,13 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Models\Product;
-use App\Service\Product\ProductServiceInterface;
 use App\Http\Controllers\Front\ShopController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckOutController;
+use App\Http\Controllers\Front\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +37,20 @@ Route::prefix('cart')->group(function(){
 });
 
 Route::prefix('checkout')->group(function(){
-    Route::get('', [CheckOutController::class,'index']);
-    Route::post('/', [CheckOutController::class,'addOrder']);
+    Route::get('/', [CheckOutController::class, 'index']);
+    Route::post('/', [CheckOutController::class, 'addOrder']);
+    Route::get('/vnPayCheck', [CheckOutController::class, 'vnPayCheck']);
+    Route::get('/result', [CheckOutController::class, 'result']);
+});
+
+Route::prefix('account')->group(function(){
+    Route::get('login',[AccountController::class,'login']);
+    Route::post('login',[AccountController::class,'checkLogin']);
+    Route::get('logout',[AccountController::class,'logout']);
+    Route::get('register',[AccountController::class,'register']);
+    Route::post('register',[AccountController::class,'postRegister']);
+    Route::prefix('my-order')->middleware('CheckMemberLogin')->group(function () {
+        Route::get('/', [AccountController::class, 'myOrderIndex']);
+        Route::get('{id}', [AccountController::class, 'myOrderShow']);
+    });
 });

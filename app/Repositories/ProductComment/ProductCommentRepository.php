@@ -7,5 +7,6 @@ use App\Models\ProductComment;
 
 class ProductCommentRepository extends BaseRepositories implements ProductCommentRepositoryInterface{
     public function getModel(){
+        return ProductComment::class;
     }
 }

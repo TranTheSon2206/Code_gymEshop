@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\ProductCategory\ProductCategoryRepository;
 use App\Repositories\Blog\BlogRepository;
 use App\Repositories\Blog\BlogRepositoryInterface;
@@ -31,6 +33,8 @@ use App\Service\Product\ProductService;
 use App\Service\Product\ProductServiceInterface;
 use App\Service\ProductCategory\ProductCategoryService;
 use App\Service\ProductCategory\ProductCategoryServiceInterface;
+use App\Service\User\UserService;
+use App\Service\User\UserServiceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,15 +57,15 @@ class AppServiceProvider extends ServiceProvider
         );
 
         //ProductComment
-        // $this->app->singleton(
-        //     ProductCommentRepositoryInterface::class,
-        //     ProductCommentRepository::class
-        // );
+        $this->app->singleton(
+            ProductCommentRepositoryInterface::class,
+            ProductCommentRepository::class
+        );
 
-        // $this->app->singleton(
-        //     ProductCommentServiceInterface::class,
-        //     ProductCommentService::class
-        // );
+        $this->app->singleton(
+            ProductCommentServiceInterface::class,
+            ProductCommentService::class
+        );
 
         //Blog
         $this->app->singleton(
@@ -111,6 +115,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             OrderDetailServiceInterface::class,
             OrderDetailService::class
+        );
+
+        //User
+        $this->app->singleton(
+            UserRepositoryInterface::class,
+            UserRepository::class
+        );
+        $this->app->singleton(
+            UserServiceInterface::class,
+            UserService::class
         );
     }
 

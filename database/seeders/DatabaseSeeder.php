@@ -24,9 +24,20 @@ class DatabaseSeeder extends Seeder
                 'email' => 'CodeLean@gmail.com',
                 'password' => Hash::make('123456'),
                 'avatar' => null,
-                'level' => 0,
+                'level' => 2,
                 'description' => null,
+
+                'company_name' => 'CodeGym',
+                'country' => 'Viet Nam',
+                'street_address' => 'Mon City, My Dinh 2, Nam Tu Liem',
+                'postcode_zip' => '10000',
+                'town_city' => 'Ha Noi',
+                'phone' => '02462538829',
             ],
+        ]);
+        
+        DB::table('users')->insert([
+            
             [
                 'id' => 2,
                 'name' => 'admin',
