@@ -23,7 +23,7 @@
     <div class="shopping-cart spad">
         <div class="container">
             <div class="row">
-                @if(Cart::count() >0)
+                @if(Cart::count() >=0)
                     <div class="col-lg-12">
                         <div class="cart-table">
                             <table>
@@ -35,7 +35,7 @@
                                     <th>Quantity</th>
                                     <th>Total</th>
                                     <th>
-                                        <i onclick="confirm('Are you sure?') === true ? window.location='./cart/destroy' : ''" class="ti-close" style="cursor: pointer"></i></th>
+                                        <i onclick="confirm('Are you sure?') === true ? destroyCart() :''" class="ti-close" style="cursor: pointer"></i></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -54,7 +54,7 @@
                                             </div>
                                         </td>
                                         <td class="total-price first-row">${{ number_format($cart->price * $cart->qty, 2)  }}</td>
-                                        <td class="close-td first-row"><i onclick="window.location='./cart/delete/{{ $cart ->rowId }}'" class="ti-close"></i></td>
+                                        <td class="close-td first-row"><i onclick="removeCart('{{$cart->rowId}}')" class="ti-close"></i></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
